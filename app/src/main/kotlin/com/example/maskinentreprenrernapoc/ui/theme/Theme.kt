@@ -23,16 +23,16 @@ import androidx.core.view.WindowCompat
  * Defines color mappings for dark mode components.
  */
 private val DarkColorScheme = darkColorScheme(
-    primary = White80,
-    secondary = White80,
-    tertiary = White80,
+    primary = White,
+    secondary = White,
+    tertiary = White,
     background = GreyBlack,
     surface = GreyBlack,
     onPrimary = GreyBlack,
     onSecondary = GreyBlack,
     onTertiary = GreyBlack,
-    onBackground = White80,
-    onSurface = White80,
+    onBackground = Blue,
+    onSurface = Blue,
     secondaryContainer = Color(0xFFE4F152), // Highlight color for containers
     onSecondaryContainer = Color(0xFF002269),
 )
@@ -42,9 +42,9 @@ private val DarkColorScheme = darkColorScheme(
  * Defines color mappings for light mode components.
  */
 private val LightColorScheme = lightColorScheme(
-    primary = White80,
-    secondary = White80,
-    tertiary = White80,
+    primary = Blue,
+    secondary = Blue,
+    tertiary = Blue,
     background = White,
     surface = White,
     onPrimary = White,
