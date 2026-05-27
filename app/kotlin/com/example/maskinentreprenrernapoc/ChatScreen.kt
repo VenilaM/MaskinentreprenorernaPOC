@@ -13,19 +13,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
-/**
- * Main UI for the Chat Screen.
- * Displays a list of messages, quick suggestions, and an input field.
- */
 @Composable
 fun ChatScreen(viewModel: ChatViewModel = viewModel()) {
-    // Observe messages from the ViewModel
     val messages by viewModel.messages.collectAsState()
-    // Local state for the text input field
     var inputText by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        // 1. Message History: A scrollable list of chat messages
+        // 1. Message History
         LazyColumn(
             modifier = Modifier.weight(1f),
             reverseLayout = false,
@@ -38,7 +32,7 @@ fun ChatScreen(viewModel: ChatViewModel = viewModel()) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // 2. Quick Suggestions: Clickable chips to quickly send predefined queries
+        // 3. Quick Suggestions
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -54,7 +48,7 @@ fun ChatScreen(viewModel: ChatViewModel = viewModel()) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // 3. Input Field: Text box and send button for user interaction
+        // 2. Input Field
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextField(
                 value = inputText,
@@ -74,10 +68,6 @@ fun ChatScreen(viewModel: ChatViewModel = viewModel()) {
     }
 }
 
-/**
- * Individual message bubble in the chat history.
- * Changes alignment and color based on whether the sender is the user or the AI.
- */
 @Composable
 fun ChatBubble(message: ChatMessage) {
     val alignment = if (message.isUser) Alignment.End else Alignment.Start
@@ -91,13 +81,11 @@ fun ChatBubble(message: ChatMessage) {
             tonalElevation = 2.dp
         ) {
             Column(modifier = Modifier.padding(12.dp)) {
-                // Main message text
                 Text(
                     text = message.text,
-                    color = if (message.isUser) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondaryContainer
+                    color = if (message.isUser) Color.White else Color.Unspecified
                 )
 
-                // If the message contains specific risks, display them as cards
                 if (message.risks.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(8.dp))
                     message.risks.forEach { risk ->
@@ -110,17 +98,12 @@ fun ChatBubble(message: ChatMessage) {
     }
 }
 
-/**
- * Specialized card for displaying a risk identified in the chat.
- * Uses a colored dot to indicate risk severity (High/Medium/Low).
- */
 @Composable
 fun RiskCard(risk: Risk) {
-    // Determine the indicator color based on severity levels
     val severityColor = when (risk.severity) {
-        RiskSeverity.HIGH -> Color(0xFFD32F2F)    // Red
-        RiskSeverity.MEDIUM -> Color(0xFFF57C00)  // Orange
-        RiskSeverity.LOW -> Color(0xFF388E3C)     // Green
+        RiskSeverity.HIGH -> Color(0xFFD32F2F)
+        RiskSeverity.MEDIUM -> Color(0xFFF57C00)
+        RiskSeverity.LOW -> Color(0xFF388E3C)
     }
 
     Card(
@@ -132,20 +115,14 @@ fun RiskCard(risk: Risk) {
             modifier = Modifier.padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Severity Indicator (Colored Circle)
             Box(
                 modifier = Modifier
                     .size(12.dp)
                     .padding(2.dp)
             ) {
-                Surface(
-                    color = severityColor, 
-                    shape = androidx.compose.foundation.shape.CircleShape, 
-                    modifier = Modifier.fillMaxSize()
-                ) {}
+                Surface(color = severityColor, shape = androidx.compose.foundation.shape.CircleShape, modifier = Modifier.fillMaxSize()) {}
             }
             Spacer(modifier = Modifier.width(8.dp))
-            // Risk Details
             Column {
                 Text(text = risk.title, style = MaterialTheme.typography.labelLarge)
                 Text(text = risk.description, style = MaterialTheme.typography.bodySmall)

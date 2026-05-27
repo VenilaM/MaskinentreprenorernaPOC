@@ -18,8 +18,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+/**
+ * Dark Theme Configuration
+ * Defines color mappings for dark mode components.
+ */
 private val DarkColorScheme = darkColorScheme(
-    primary = Blue80,
+    primary = White80,
     secondary = White80,
     tertiary = White80,
     background = GreyBlack,
@@ -27,16 +31,20 @@ private val DarkColorScheme = darkColorScheme(
     onPrimary = GreyBlack,
     onSecondary = GreyBlack,
     onTertiary = GreyBlack,
-    onBackground = White,
-    onSurface = White,
-    secondaryContainer = Color(0xFF002269), // Dark Brown
-    onSecondaryContainer = Color(0xFFFFFFFF), // Light Brown
+    onBackground = White80,
+    onSurface = White80,
+    secondaryContainer = Color(0xFFE4F152), // Highlight color for containers
+    onSecondaryContainer = Color(0xFF002269),
 )
 
+/**
+ * Light Theme Configuration
+ * Defines color mappings for light mode components.
+ */
 private val LightColorScheme = lightColorScheme(
-    primary = Blue40,
-    secondary = Blue40,
-    tertiary = Blue40,
+    primary = White80,
+    secondary = White80,
+    tertiary = White80,
     background = White,
     surface = White,
     onPrimary = White,
@@ -44,26 +52,32 @@ private val LightColorScheme = lightColorScheme(
     onTertiary = White,
     onBackground = GreyBlack,
     onSurface = GreyBlack,
-    secondaryContainer = Color(0xFFE4F152),
+    secondaryContainer = Color(0xFFE4F152), // Highlight color for containers
     onSecondaryContainer = Color(0xFF002269),
 )
 
+/**
+ * Application Theme Wrapper
+ * Applies the custom color scheme and handles system UI (status bar) styling.
+ */
 @Composable
 fun NonrepresentationalTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = false, // Set too false to force our warm theme
+    // Dynamic color support for Android 12+ (currently disabled)
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
+    // Select the appropriate color scheme based on user settings
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
+
+    // Sync the status bar color with the theme's primary color
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -73,6 +87,7 @@ fun NonrepresentationalTheme(
         }
     }
 
+    // Provide the theme to the rest of the application
     MaterialTheme(
         colorScheme = colorScheme,
         content = content
