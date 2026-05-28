@@ -31,8 +31,8 @@ private val DarkColorScheme = darkColorScheme(
     onPrimary = GreyBlack,
     onSecondary = GreyBlack,
     onTertiary = GreyBlack,
-    onBackground = Blue,
-    onSurface = Blue,
+    onBackground = White,
+    onSurface = White,
     secondaryContainer = Color(0xFFE4F152), // Highlight color for containers
     onSecondaryContainer = Color(0xFF002269),
 )
@@ -50,8 +50,8 @@ private val LightColorScheme = lightColorScheme(
     onPrimary = White,
     onSecondary = White,
     onTertiary = White,
-    onBackground = GreyBlack,
-    onSurface = GreyBlack,
+    onBackground = Blue,
+    onSurface = Blue,
     secondaryContainer = Color(0xFFE4F152), // Highlight color for containers
     onSecondaryContainer = Color(0xFF002269),
 )
