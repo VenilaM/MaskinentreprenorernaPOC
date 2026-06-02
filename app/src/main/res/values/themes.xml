@@ -4,5 +4,6 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/purple_500</item> -->
         <item name="colorPrimary">@color/white</item>
+
     </style>
 </resources>
